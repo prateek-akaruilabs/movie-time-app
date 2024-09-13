@@ -33,7 +33,7 @@ class Show < ApplicationRecord
   end
 
   def bookings_of_show_on_date(selected_date) 
-    bookings.where(movie_date: selected_date)
+    bookings.where(movie_date: selected_date, booking_status: 'Booked')
   end
 
   def total_booked_seats(all_bookings)
