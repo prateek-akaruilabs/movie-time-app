@@ -1,0 +1,337 @@
+<div class='card'>
+    <div class="card-body">
+        <h2 class="card-title"><%= @movie.name %></h2>
+        <h6 class="card-subtitle mb-2 text-body-secondary">
+            <span><%= @cinema.name %></span> | <span><span id='movie-date-summary'></span>, <%= @show.show_time %></span>
+        </h6>        
+    </div>
+</div>
+<div class='card'>
+    <div class="card-body">
+        <div class='row'>
+            <div class='col-md-8'>
+                <div id='snack-card-container' class='card'>
+                    <div class='card-header'>
+                        <h5 class='text-danger'>FOOD & BEVERAGE</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row row-cols-1 row-cols-md-3 g-3" data-bs-spy="scroll" data-bs-smooth-scroll="true">
+                            <% @snacks.each_with_index do |snack, number| %>
+                              <div class="col">
+                                <div class='card h-100 snacks-card' id=<%= snack.id %> data-price=<%= snack.price %> data-name="<%= snack.name %>">  
+                                    <div class='row g-0'>
+                                        <div class='card-header'>
+                                            <span>
+                                                <%= snack.name %>
+                                            </span>
+                                            <span>
+                                                <% if snack.food_type.downcase == 'veg' %>
+                                                    <span class='text-success float-right'><i class="bi bi-circle-fill" data-bs-toggle="tooltip" data-bs-title="This combo includes only veg items."></i></<span>
+                                                <% else %>
+                                                    <span class='text-danger float-right'><i class="bi bi-circle-fill" data-bs-toggle="tooltip" data-bs-title="Note, this combo also includes non-veg items."></i></<span>
+                                                <% end %>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <img src=<%= '/images/snacks/snack.avif'%> class="img-fluid rounded-start" alt="...">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Popcorn & Soft Drink</h5>
+                                                <p class="card-text">
+                                                    <small class="text-body-secondary">
+                                                        <% if snack.discount_perc > 0 %>
+                                                            Rs. <span class='text-decoration-line-through'>
+                                                                <%= number_with_precision(snack.price, precision: 2) %>
+                                                            </span>
+                                                            <span class='fw-bold'><%= number_with_precision(snack.price * snack.discount_perc, precision: 2) %></span>
+                                                        <% else %>
+                                                            Rs. <%= number_with_precision(snack.price, precision: 2) %>
+                                                        <% end %>
+                                                    </small>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='row'>
+                                        <div class='col-md-12'>
+                                            <div class='card-footer d-grid'>
+                                                <button type='button' class="add-snack-btn btn btn-dark <%= !snack.in_stock && 'disabled' %>"><%= !snack.in_stock ? 'Unavailable' : 'Add Combo' %></button>
+                                                <div class="increment-decrement-control input-group hidden">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="quantity-left-minus btn btn-dark btn-number"  data-type="minus" data-field="">
+                                                            <span class="bi bi-dash"></span>
+                                                        </button>
+                                                    </span>
+                                                    <input type="text" id=<%= "quantity_for_#{snack.id}"%> name="quantity" class="form-control input-number text-center" value="0" min="0" max="100" disabled>
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="quantity-right-plus btn btn-dark btn-number" data-type="plus" data-field="">
+                                                            <span class="bi bi-plus"></span>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                            <% end %>
+                        </div>
+                    </div>
+                    <div class='card-footer'>
+                        <ol class="list-group-numbered">
+                            <li>Note:</li>
+                            <li class="list-group-item">Images are for representation purposes only.</li>
+                            <li class="list-group-item">Prices inclusive of taxes.</li>
+                            <li class="list-group-item">All nutritional information is indicative, values are per serve as shared by the Cinema and may vary depending on the ingredients and portion size.</li>
+                            <li class="list-group-item">An average active adult requires 2000 kcal energy per day, however, calorie needs may vary.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-4'>
+                <div id='booking-summary-card' class='card'>
+                    <div class='card-header'>
+                        <h5 class='text-danger'>BOOKING SUMMARY <span id='movie-date-summary'></span></h5>
+                    </div>
+                    <div class="card-body">
+                        <div class='row'>
+                            <div id='seat-selection-summary' class='col-md-6 text-start'>
+                            </div>
+                            <div id='movie-bill-summary' class='col-md-6 text-end'>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class='col-md-6 text-start'>
+                                Convenience fees
+                            </div>
+                            <div id='convenience-fee-summary' class='col-md-6 text-end'> 
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class='col-md-6 text-start'>
+                                Food & Beverage 
+                            </div>
+                            <div id='snack-bill-summary' class='col-md-6 text-end'> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class='card-footer'>
+                        <div class='row'>
+                            <div class='col-md-6 text-start'>
+                                Total Amount
+                            </div>
+                            <div id='total-bill-summary' class='col-md-6 text-end'> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id='ticket-and-payment-summary-card' class='card'>
+                    <div class='card-header'>
+                        <h5 class='text-danger'>SELECT TICKET TYPE</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class='ticket-types'>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name='inlineRadioOptions' id="inlineRadio1" value="M-Ticket" checked>
+                                <label class="form-check-label" for="inlineRadio1">M-Ticket <i class='bi bi-info-circle' data-bs-toggle="tooltip" data-bs-title="Show the m-ticket QR Code on your mobile to enter the cinema."></i></label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name='inlineRadioOptions' id="inlineRadio2" value="Box-Office Pickup">
+                                <label class="form-check-label" for="inlineRadio2">Box-Office Pickup <i class='bi bi-info-circle' data-bs-toggle="tooltip" data-bs-title="Select this option to pick your tickets from Box Office."></i></label>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class='d-grid'>
+                                <p class='text-secondary'><i class="bi bi-info-circle"></i> By proceeding, I express my consent to complete this transaction.</p>
+                                <button id='final-payment-btn' type="button" class="btn btn-danger btn-full">
+                                    Proceed to Pay
+                                </button>
+                                <div class='card-subheader'>
+                                    <p class='text-center'>You can cancel the tickets 20 min(s) before the show. Refunds will be done according to Cancellation Policy</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        console.log('coming first')
+        var snacksSelected = [];
+        var totalSnacksPrice = 0;
+        var finalPriceToPay = 0;
+
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+        
+        // reset localstorage data which we are setting on click add combo
+        localStorage.setItem("snacksSelected", JSON.stringify(snacksSelected));
+        localStorage.setItem("totalSnacksPrice", totalSnacksPrice);
+        localStorage.setItem("finalPriceToPay", finalPriceToPay);
+        localStorage.setItem("convenienceFee", 0)
+
+        // display booking date from local storage
+        $('#movie-date-summary').text(localStorage.getItem('movieDate'))
+
+        // display seat details from local storage
+        var seatsSelected = JSON.parse(localStorage.getItem('seatsSelected'));
+        $('#seat-selection-summary').text(seatsSelected.map(d => d.category + ' ' + d.row + d.seat).join(', '))
+
+        // display seat selection price from local storage
+        var movieBill = Number(localStorage.getItem('totalSeatPrice')).toFixed(2);
+        $('#movie-bill-summary').text('Rs. ' + movieBill);
+        
+        // calculate and display convenienceFee accroding to the seats selection
+        var convenienceFee = Number(seatsSelected.length * (21 + 18 / 100)).toFixed(2); 
+        $('#convenience-fee-summary').text('Rs. ' + convenienceFee);
+        localStorage.setItem('convenienceFee', convenienceFee);
+
+        // display snack bill initially as zero
+        $('#snack-bill-summary').text('Rs. ' + totalSnacksPrice.toFixed(2));
+
+        // display total bill by adding movieBill, convenienceFee and totalSnacksPrice
+        finalPriceToPay = (Number(movieBill) + Number(convenienceFee) + Number(totalSnacksPrice));
+        $('#total-bill-summary').text('Rs. ' + finalPriceToPay);
+        localStorage.setItem("finalPriceToPay", finalPriceToPay);
+
+        $('.add-snack-btn').click(function(e) {
+            e.preventDefault();
+            console.log('clicked');
+            var snacksCard = $(this).closest('.snacks-card');
+            
+            var snackId = snacksCard.attr('id')
+            var snackName = snacksCard.data('name')
+            var snackPrice = snacksCard.data('price')
+            var inrementDecrementDiv = $(this).closest('.card-footer').find('.increment-decrement-control')
+            var inrementDecrementBox = inrementDecrementDiv.find('.input-number')
+            console.log(movieBill, convenienceFee, finalPriceToPay, snackId, snackName, snacksSelected);
+            snacksSelected = JSON.parse(localStorage.getItem("snacksSelected"))
+            console.log('snacksSelected', snacksSelected)
+
+            // changes in Add combo button
+            $(this).addClass('hidden');
+            inrementDecrementDiv.removeClass('hidden');
+            inrementDecrementBox.val(1);
+
+            // Logic to add snacks getting selected by the user on click Add Combo button
+            snacksSelected.push({'id': snackId, 'comboName': snackName, 'price': snackPrice, 'quantity': 1});
+            console.log(totalSnacksPrice, snackPrice)
+            totalSnacksPrice = totalSnacksPrice + snackPrice;
+            console.log('totalSnacksPrice', totalSnacksPrice);
+            $('#snack-bill-summary').text('Rs. ' + totalSnacksPrice.toFixed(2));
+            finalPriceToPay = (Number(movieBill) + Number(convenienceFee) + Number(totalSnacksPrice));
+            $('#total-bill-summary').text('Rs. ' + finalPriceToPay);
+
+            // Update new values in localstorage 
+            localStorage.setItem("snacksSelected", JSON.stringify(snacksSelected));
+            localStorage.setItem("totalSnacksPrice", totalSnacksPrice)
+            localStorage.setItem("finalPriceToPay", finalPriceToPay) 
+        })
+
+
+        $('.quantity-right-plus').click(function(e){
+            e.preventDefault();
+            var snacksCard = $(this).closest('.snacks-card');
+            console.log(snacksCard)
+            snacksSelected = JSON.parse(localStorage.getItem('snacksSelected'));
+            console.log('snacksSelected', snacksSelected)
+            var currentSnack = snacksSelected.filter( s => s.id === snacksCard.attr('id'))[0]
+            totalSnacksPrice = localStorage.getItem('totalSnacksPrice');
+            finalPriceToPay = localStorage.getItem('finalPriceToPay');
+            console.log('currentSnack', currentSnack, totalSnacksPrice, finalPriceToPay)
+            var inputBox = $(this).closest('.card-footer').find('.input-number');
+            var quantity = parseInt(inputBox.val());
+            inputBox.val(quantity + 1);
+            
+            currentSnack.quantity = currentSnack.quantity + 1;
+            console.log('snacksSelected', snacksSelected)
+
+            totalSnacksPrice = Number(totalSnacksPrice) + Number(currentSnack.price);
+            console.log('totalSnacksPrice', totalSnacksPrice);
+            $('#snack-bill-summary').text('Rs. ' + Number(totalSnacksPrice).toFixed(2));
+            finalPriceToPay = (Number(finalPriceToPay) + Number(currentSnack.price)).toFixed(2);
+            $('#total-bill-summary').text('Rs. ' + finalPriceToPay);
+            
+            // Update new values in localstorage 
+            localStorage.setItem('snacksSelected', JSON.stringify(snacksSelected));
+            localStorage.setItem("totalSnacksPrice", totalSnacksPrice);
+            localStorage.setItem("finalPriceToPay", finalPriceToPay); 
+            console.log('after update', currentSnack, totalSnacksPrice, finalPriceToPay);
+        });
+
+        $('.quantity-left-minus').click(function(e){
+            e.preventDefault();
+            var inputBox = $(this).closest('.card-footer').find('.input-number');
+            var quantity = parseInt(inputBox.val());
+            var snacksCard = $(this).closest('.snacks-card');
+            
+            if (quantity > 1) {
+                inputBox.val(quantity - 1);
+            } else {
+                console.log('eqwew')
+                var snackBtn = $(this).closest('.card-footer').find('.add-snack-btn');
+                var inrementDecrementDiv = $(this).closest('.card-footer').find('.increment-decrement-control');
+                inrementDecrementDiv.addClass('hidden');
+                snackBtn.removeClass('hidden')
+            }
+
+            snacksSelected = JSON.parse(localStorage.getItem('snacksSelected'));
+            console.log('snacksSelected', snacksSelected);
+            var currentSnack = snacksSelected.filter( s => s.id === snacksCard.attr('id'))[0];
+            console.log('currentSnack', currentSnack);
+            totalSnacksPrice = localStorage.getItem('totalSnacksPrice');
+            finalPriceToPay = localStorage.getItem('finalPriceToPay');
+            var inputBox = $(this).closest('.card-footer').find('.input-number');
+
+            if (currentSnack.quantity > 1) {
+                currentSnack.quantity = currentSnack.quantity - 1;
+            } else {
+                snacksSelected = snacksSelected.filter( s => s.id !== snacksCard.attr('id'));
+            }
+
+            localStorage.setItem('snacksSelected', JSON.stringify(snacksSelected));
+
+            totalSnacksPrice = Number(totalSnacksPrice) - Number(currentSnack.price);
+            console.log('totalSnacksPrice', totalSnacksPrice);
+            $('#snack-bill-summary').text('Rs. ' + Number(totalSnacksPrice).toFixed(2));
+            localStorage.setItem("totalSnacksPrice", totalSnacksPrice);
+            finalPriceToPay = (Number(finalPriceToPay) - Number(currentSnack.price)).toFixed(2);
+            $('#total-bill-summary').text('Rs. ' + finalPriceToPay);
+            localStorage.setItem("finalPriceToPay", finalPriceToPay);             
+        });
+
+        $('#final-payment-btn').click(function(e) {
+            var ticketType = $('#inlineRadio1').attr('checked') ? 'M-Ticket' : 'Box-Office Pickup'
+            $.ajax({
+                content_type: 'text/html',
+                type: 'post',
+                url: window.location.pathname.replace('/new', ''),
+                data: {
+                    total_seat_price: JSON.parse(localStorage.getItem('totalSeatPrice')),
+                    convenience_fee: JSON.parse(localStorage.getItem('convenienceFee')),
+                    total_snacks_price: JSON.parse(localStorage.getItem('totalSnacksPrice')),
+                    final_price_to_pay: JSON.parse(localStorage.getItem('finalPriceToPay')),
+                    snacks_selected: localStorage.getItem('snacksSelected'),
+                    seats_selected: localStorage.getItem('seatsSelected'),
+                    movie_date: localStorage.getItem('movieDate'),
+                    ticket_type: ticketType
+                },
+                success: function(response) {
+                    console.log(response);
+                    window.location.href = "/bookings/" + response.booking.id + "/payments/new"
+                },
+                error:  function(response) {
+                    console.log(response);
+                    alert('Sorry! Someone has already booked the seats that you have selected. Please try again.')
+                    window.location.href = "/"
+                }
+            });
+        })
+    })
+</script>

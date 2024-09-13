@@ -1,0 +1,15 @@
+<div class="card mb-3 movie-page-container" style="">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src=<%= @movie.image_url %> class="card-img img-fluid rounded-start" alt="Image not loaded">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title"><%= @movie.name %></h5>
+        <p class="card-text"><%= @movie.description %></p>
+        <p class="card-text"><small class="text-body-secondary">Released date <%= @movie.release_date %></small></p>
+        <%= link_to "Book Ticket", movie_shows_path(@movie), class: 'btn btn-lg btn-outline-info' %>
+      </div>
+    </div>
+  </div>
+</div>

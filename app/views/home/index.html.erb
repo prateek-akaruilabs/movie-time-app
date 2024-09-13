@@ -1,0 +1,32 @@
+<div class='card adds-container'>
+    <div class="row">
+        <%= render 'layouts/carousel'%>
+    </div>
+</div>
+<div class='card latest-movies-container'>
+    <div class="row">
+        <p class="fs-3 fw-bold">Recommended Movies</p>
+    </div>
+    <div class="row">
+        <% @recommended_movies.each do |movie| %>
+            <div class="col-md">
+                <div class="card movie-card h-100">
+                    <a href=<%= movie_path(movie) %> class='movie-link'> 
+                        <img src=<%= movie.image_url %> class="card-img-top" alt="Image not loaded">
+                        <div class="card-body">
+                            <div class='movie-name-genre'>
+                                <h5 class="card-title">
+                                    <%= movie.name %>
+                                </h5>
+                                <p class="card-text"><%= movie.genre %></p>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <a href=<%= movie_shows_path(movie) %> class="btn btn-outline-info">Book Ticket</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        <% end %>
+    </div>
+</div>

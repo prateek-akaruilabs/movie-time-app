@@ -1,0 +1,158 @@
+<div class='card'>
+    <div class="card-body">
+        <h5 class="card-title"><%= @movie.name %>&nbsp;<span class="badge rounded-pill text-bg-success"><%= @movie.age_category %></span></h5>
+        <h6 class="card-subtitle mb-2 text-body-secondary">
+            
+        </h6>   
+        <p class="card-text"><small class="text-body-secondary"><%= @cinema.name %></span> | <span><span id='movie-date-summary'></span>, <%= @show.show_time %></small></p>
+    </div>
+    <div class="card-footer text-body-secondary">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination pagination-sm justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <% @upcoming_shows.each do |show| %>
+                    <li class="page-item <%= show.id.to_s === params[:show_id] && 'active' %>">
+                        <a class="page-link" href=<%=cinema_screen_show_seats_path(@cinema, @screen, show) %>>
+                            <%= show.show_time %>
+                        </a>
+                    </li>
+                <% end %>
+                <li class="page-item">
+                    <a class="page-link" href=<%= movie_shows_path(@movie, next: true) %> aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<div class='card seating-plan'>
+    <div class="card-body">
+        <% @seats.pluck(:category, :price).uniq.each do |category, price| %>
+            <h6 class="card-title">Rs. <%= number_with_precision(price, :precision => 2) %> <%= category.upcase %></h6>
+            <hr>
+            <% @seats.where(category: category).group_by(&:row).each do |row_id, values| %>
+                <%= render 'layouts/seating_plan', seats: values, booked_seats: @booked_seats, row_id: row_id, price: price %>
+            <% end %>
+            <br />
+        <% end %>
+        <div class='row seat-status'>
+            <span>
+                <span class='seat-status btn btn-outline-success'>Available</span>
+                <span class='seat-status btn btn-success'>Selected</span>
+                <span class='seat-status btn btn-secondary'>Sold</span>
+            </span>
+        </div>
+    </div>
+    <div class="card-footer text-body-secondary fixed-bottom screen">
+        <span>
+            <h3 class='text-center'>
+                <span>
+                    <i class="bi bi-tv-fill">&nbsp;Screen this side</i>
+                </span>
+                <span>
+                    <button id='payment-btn' type="button" class="disabled float-end btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#makePaymentModal">
+                        Make Payment
+                    </button>
+                </span>
+            </h3>
+        </span>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="makePaymentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Notes</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-group list-group-numbered">
+          <li class="list-group-item">
+            Person below 18 years cannot be admitted for `A` certified movies.
+        </li>
+        <li class="list-group-item">
+            Tickets are compulsory for children of 3 years & above.
+        </li>
+        <li class="list-group-item">
+            Items like laptops, cameras, knives, lighters, matchboxes, cigarettes, firearms, and all types of inflammable objects are strictly prohibited.
+        </li>
+        <li class="list-group-item">
+            Items like carry-bags, eatables, helmets, handbags are not allowed inside the theatres and are strictly prohibited. Kindly deposit at the baggage counter of the mall/cinema.
+        </li>
+        <li class="list-group-item">
+            For 3D movies, ticket price includes charges towards the usage of 3D glasses.
+        </li>
+        <li class="list-group-item">
+            The seat Layout page for MovieMax Cinemas is for representational purposes only and the actual seat layout might vary.
+        </li>
+        <li class="list-group-item">
+            Outside food & beverages are not allowed in the cinema premises.
+        </li>
+        <li class="list-group-item">
+            Tickets issued are valid only for the date and time mentioned on them.
+        </li>
+        <li class="list-group-item">
+            Tickets are non-transferable and non-refundable.
+        </li>
+        <li class="list-group-item">
+            Tickets once generated cannot be changed, reimbursed or cancelled.
+        </li>
+        <li class="list-group-item">
+            Movie schedules and rates are subject to change without prior notice.
+        </li>
+        <li class="list-group-item">
+            Patrons under the influence of alcohol and drugs will not be allowed inside the cinema premises.
+        </li>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <%= link_to 'Accept', new_cinema_screen_show_booking_path(@cinema, @screen, @show), class: 'btn btn-primary' %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+        var seatsSelected = [];
+        var totalSeatPrice = 0;
+        // display booking date from local storage
+        $('#movie-date-summary').text(localStorage.getItem('movieDate'));
+
+        $('div.seat-rows').click(function() {
+            var seatID = $(this).attr('id')
+            var seatUID = $(this).data('uid')
+            var seatCategory = $(this).data('category')
+            var seatPrice = $(this).data('price')
+            console.log(seatID, seatCategory, seatPrice);
+            if (seatsSelected.filter(d => (d.row + d.seat) == seatID).length > 0) {
+                seatsSelected = seatsSelected.filter(d => (d.row + d.seat) != seatID);
+                totalSeatPrice = totalSeatPrice - seatPrice
+                $(this).removeClass('selected');
+            } else {
+                seatsSelected.push({'id': seatUID, 'category': seatCategory, 'row': seatID[0], 'seat': seatID.slice(1, ), 'price': seatPrice});
+                totalSeatPrice = totalSeatPrice + seatPrice;
+                $(this).addClass('selected');
+            }
+            $('#payment-btn').text('Pay Rs. ' + totalSeatPrice.toFixed(2));
+            if (totalSeatPrice > 0) {
+                $('#payment-btn').removeClass('disabled')
+            } else {
+                $('#payment-btn').addClass('disabled')
+            }
+            localStorage.setItem("seatsSelected", JSON.stringify(seatsSelected));
+            localStorage.setItem("totalSeatPrice", totalSeatPrice)
+        })
+    })
+</script>

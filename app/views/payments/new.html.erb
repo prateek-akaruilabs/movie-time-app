@@ -1,0 +1,232 @@
+<div class='card'>
+    <div class="card-body">
+        <div class='row'>
+            <div class='col-md-8'>
+                <div class="accordion" id="accordionPanelsStayOpenExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                        Share your Contact Details
+                    </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                        <div class="accordion-body">
+                            <form class="row g-3">
+                                <div class="col-auto">
+                                    <label for="staticEmail2" class="visually-hidden">Email</label>
+                                    <input type="text" class="form-control" id="staticEmail2" value="" placeholder='Email Address'>
+                                </div>
+                                <div class="col-auto">
+                                    <label for="inputMobile" class="visually-hidden">Mobile</label>
+                                    <input type="text" class="form-control" id="inputMobile" placeholder="+91">
+                                </div>
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-primary mb-3">Continue</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                        Apply offers or Promocodes
+                    </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                    </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                        Payment Options
+                    </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+                        <div class="accordion-body">
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="list-group" id="list-tab" role="tablist">
+                                        <a class="list-group-item list-group-item-action active" id="list-upi-list" data-bs-toggle="list" href="#list-upi" role="tab" aria-controls="list-settings">UPI</a>
+                                        <a class="list-group-item list-group-item-action" id="list-card-list" data-bs-toggle="list" href="#list-card" role="tab" aria-controls="list-home">Debit/Credit Card</a>
+                                        <a class="list-group-item list-group-item-action" id="list-net-banking-list" data-bs-toggle="list" href="#list-net-banking" role="tab" aria-controls="list-profile">Net Banking</a>
+                                        <a class="list-group-item list-group-item-action" id="list-wallets-list" data-bs-toggle="list" href="#list-wallets" role="tab" aria-controls="list-messages">Mobile Walllets</a>
+                                        <a class="list-group-item list-group-item-action" id="list-vouchers-list" data-bs-toggle="list" href="#list-vouchers" role="tab" aria-controls="list-settings">Gift Vouchers</a>
+                                        <a class="list-group-item list-group-item-action" id="list-points-list" data-bs-toggle="list" href="#list-points" role="tab" aria-controls="list-settings">Redeem Points</a>
+                                    </div>
+                                </div>
+                                <div class="col-8">
+                                    <div class="tab-content" id="nav-tabContent">
+                                        <div class="tab-pane fade show active" id="list-upi" role="tabpanel" aria-labelledby="list-upi-list">
+                                            <div class='row'>
+                                                <h5 class='card-title'>Pay by UPI App</h5>
+                                            </div>
+                                            <div class='row'>
+                                                <div class='col-md-12'>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                                        <label class="form-check-label" for="inlineRadio1">
+                                                            <span><img src=<%= '/images/payments/gpay.avif'%> class="img-fluid rounded-start" alt="..."></span><span>Google Pay</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                                        <label class="form-check-label" for="inlineRadio2">
+                                                            <span><img src=<%= '/images/payments/Amazonpay.avif'%> class="img-fluid rounded-start" alt="..."></span><span>Amazon Pay</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+                                                        <label class="form-check-label" for="inlineRadio3">
+                                                            <span><img src=<%= '/images/payments/paytmupi_web.avif'%> class="img-fluid rounded-start" alt="..."></span><span>Paytm (disabled)</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="option3">
+                                                        <label class="form-check-label" for="inlineRadio4">
+                                                            <span><img src=<%= '/images/payments/bhim_web.avif'%> class="img-fluid rounded-start" alt="..."></span><span>BHIM</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio5" value="option3">
+                                                        <label class="form-check-label" for="inlineRadio5">
+                                                            <span><img src=<%= '/images/payments/phonepe_web.avif'%> class="img-fluid rounded-start" alt="..."></span><span>Phonepe</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class='row text-center'>
+                                                <button id='make-payment-btn' type="button" class="btn btn-danger">
+                                                    Make Payment
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="list-card" role="tabpanel" aria-labelledby="list-card-list">
+                                            <h5 class='card-title'>Pay by Debit/Credit card</h5>
+                                        </div>
+                                        <div class="tab-pane fade" id="list-net-banking" role="tabpanel" aria-labelledby="list-net-banking-list">
+                                            <h5 class='card-title'>Pay by Net Banking</h5>
+                                        </div>
+                                        <div class="tab-pane fade" id="list-wallets" role="tabpanel" aria-labelledby="list-wallets-list">
+                                            <h5 class='card-title'>Pay by Mobile Wallets</h5>
+                                        </div>
+                                        <div class="tab-pane fade" id="list-vouchers" role="tabpanel" aria-labelledby="list-vouchers-list">
+                                            <h5 class='card-title'>Pay using Gift Voucher</h5>
+                                            <form class="row">
+                                                <div class="col-auto">
+                                                    <label for="staticEmail2" class="visually-hidden">Voucher</label>
+                                                    <input type="text" class="form-control" id="staticEmail2" value="" placeholder='Enter Voucher Number'>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <button type="submit" class="btn btn-primary mb-3">Apply</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="tab-pane fade" id="list-points" role="tabpanel" aria-labelledby="list-points-list">
+                                            <h5 class='card-title'>Pay by Points</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class='col-md-4'>
+                <div id='booking-summary-card' class='card'>
+                    <div class='card-header'>
+                        <h5 class='text-danger'>ORDER SUMMARY <span id='movie-date-summary'></span></h5>
+                    </div>
+                    <div class="card-body">
+                        <div class='row'>
+                            <div class='col-md-12'>
+                                <h5 class="card-title"><%= @movie.name %></h5>
+                                <h6 class="card-subtitle mb-2 text-body-secondary">
+                                    <span><%= @cinema.name %></span> | <span id='movie-date-summary'><%= @booking.movie_date.strftime('%a, %d %b, %Y') %>, <%= @show.show_time %></span> | <span><%= @screen.name %></span>
+                                </h6>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div id='seat-selection-summary' class='col-md-6 text-start'>
+                                <%= @booking.seat_details.map {|d| (d["category"] + ' ' + d["row"] + d["seat"]) }.join(', ') %>
+                            </div>
+                            <div id='movie-bill-summary' class='col-md-6 text-end'>
+                                <%= @booking.ticket_type %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id='ticket-and-payment-summary-card' class='card'>
+                    <div class='card-header'>
+                        <h5 class='text-danger'>BILLING SUMMARY</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class='row'>
+                            <div class='col-md-8 text-start'>
+                                Ticket Amount
+                            </div>
+                            <div id='convenience-fee-summary' class='col-md-4 text-end'> 
+                                Rs. <%= @booking.total_seat_charges %>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class='col-md-8 text-start'>
+                                Convenience Fees
+                            </div>
+                            <div id='convenience-fee-summary' class='col-md-4 text-end'> 
+                                Rs. <%= @booking.total_convenience_charges %>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class='col-md-8 text-start'>
+                                Food & Beverage Amount
+                            </div>
+                            <div id='snack-bill-summary' class='col-md-4 text-end'> 
+                                Rs. <%= @booking.food_and_beverage_charges %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='card-footer'>
+                        <div class='row'>
+                            <div class='col-md-6 text-start'>
+                                Total Amount
+                            </div>
+                            <div id='total-bill-summary' class='col-md-6 text-end'>
+                                Rs. <%= @booking.total_amount %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#make-payment-btn').click(function(e) {
+            $.ajax({
+                content_type: 'text/html',
+                type: 'post',
+                url: window.location.pathname.replace('/new', ''),
+                data: {
+                    payment_provider: 'Google Pay',
+                    payment_type: 'UPI'
+                },
+                success: function(response) {
+                    console.log(response);
+                    window.location.href = "/bookings/" + response.booking.id + "/payments/" + response.payment.id
+                },
+                error:  function(response) {
+                    console.log(response);
+                    alert('Sorry! Someone has already booked the seats that you have selected. Please try again.')
+                    window.location.href = '/'
+                }
+            });
+        })
+    })
+</script>

@@ -1,0 +1,159 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+.navbar {
+  margin-bottom: 2px;
+}
+
+.adds-container,
+.movie-page-container {
+  padding: 20px;
+}
+
+.latest-movies-container {
+  margin-top: 2px;
+  padding: 20px;
+}
+
+.movie-name-genre {
+  height: 100px;
+}
+
+.movie-link {
+  text-decoration: none;
+  color: black;
+}
+
+.card-img {
+  max-height: calc(538.753px);
+}
+
+.cinema-card {
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.show-timings {
+  padding: 10px;
+  margin-bottom: 5px;
+  min-width: 40px;
+}
+
+.seat-rows {
+  padding: 2px;
+  margin-bottom: 5px;
+  min-width: 40px;
+}
+
+.seating-plan {
+  margin-top: 10px;
+}
+
+.middle-passage {
+  margin-left: 100px;
+}
+
+.passage-between-seats {
+  margin-top: 50px;
+}
+
+.side-handicap-seats {
+  margin-left: 50px;
+  /* background-color: #2ab4bc; */
+}
+
+.recliner-seat {
+  margin-left: 20px;
+  min-width: 50px;
+  /* background-color: brown; */
+}
+
+.seat-status {
+  padding: 5px;
+  margin: 20px 5px 30px 5px;
+  min-width: 50px !important;
+}
+
+.available {
+  background-color: white;
+}
+
+.selected {
+  background-color: green;
+  color: white;
+}
+
+.selected:hover {
+  background-color: green;
+  color: white;
+}
+
+.sold {
+  background-color: grey;
+  color: white !important;
+  border-color: grey;
+  pointer-events: none;
+}
+
+.screen {
+  background-color: #f1f1f1 !important;
+}
+
+#ticket-and-payment-summary-card {
+  margin-top: 10px;
+}
+
+.ticket-types {
+  margin: 20px 0px;
+}
+
+#final-payment-btn {
+  margin-bottom: 10px;
+}
+
+.cinema-container {
+  margin-top: 10px;
+}
+
+.float-right {
+  float: right;
+}
+
+.snacks-container {
+  height: 500px;
+  overflow: auto;
+}
+
+.icon-shape {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.icon-sm {
+  width: 2rem;
+  height: 2rem;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.booking-status {
+  padding: 10%;
+}

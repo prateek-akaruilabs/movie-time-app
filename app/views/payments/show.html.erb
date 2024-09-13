@@ -1,0 +1,19 @@
+<div class='container text-center booking-status'>
+    <div class='row justify-content-center'>
+        <div class='col-10'>
+            <div class='card border-success shadow-lg p-3 mb-5 bg-body-tertiary rounded'>
+                <div class="card-body">
+                    <h5 class="card-title"><%= @movie.name %></h5>
+                    <h6 class="card-subtitle mb-2 text-body-secondary">
+                        <span><%= @cinema.name %></span> | <span id='movie-date-summary'><%= @booking.movie_date.strftime('%a, %d %b, %Y') %>, <%= @show.show_time %></span> | <span><%= @screen.name %></span>
+                    </h6>
+                    <div class='hr'></div>
+                    <h4 class="card-title">BOOKING ID: <%= @booking.booking_id %></h4>
+                    <h6 class="card-subtitle mb-2 text-body-secondary">
+                        <%= @booking.seat_details.map {|d| (d["category"] + ' ' + d["row"] + d["seat"]) }.join(', ') %>
+                    </h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

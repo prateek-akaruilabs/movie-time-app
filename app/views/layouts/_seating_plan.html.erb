@@ -1,0 +1,28 @@
+<div class='row <%= row_id == 'D' && 'passage-between-seats' %>'>
+    <div class='col-md-1 offset-1'>
+        <%= row_id %>
+    </div>
+    <div class='col-md-10'>
+        <% seats.each do |seat| %>
+            <% if seat.screen_id == 1 %>
+                <% if seat.category.downcase == 'recliner' %>
+                    <div data-uid=<%= seat.id %> data-category=<%= seat.category %> data-price=<%= price %> id=<%= "#{row_id}#{seat.number}" %> class="recliner-seat btn btn-outline-warning seat-rows <%= (booked_seats.include? seat.id) && 'sold' %>">
+                        <i class="bi bi-person-arms-up"></i><%= seat.number %>
+                    </div>
+                <% elsif seat.number > 15 %>
+                    <div data-uid=<%= seat.id %> data-category=<%= seat.category %> data-price=<%= price %> id=<%= "#{row_id}#{seat.number}" %> data-bs-toggle="tooltip" data-bs-title="Kindly note, this chair is specially desinged for handicap persons which may not be suitable for non-handicaps." class="side-handicap-seats btn btn-outline-info seat-rows <%= (booked_seats.include? seat.id) && 'sold' %>">
+                        <i class="bi bi-person-wheelchair"></i><%= seat.number %>
+                    </div>
+                <% else %>
+                    <div data-uid=<%= seat.id %> data-category=<%= seat.category %> data-price=<%= price %> id=<%= "#{row_id}#{seat.number}" %> class="<%= seat.number === 11 && 'middle-passage' %> btn btn-outline-success seat-rows <%= (booked_seats.include? seat.id) && 'sold' %>">
+                        <%= seat.number %>
+                    </div>
+                <% end %>
+            <% else %>
+                <div data-uid=<%= seat.id %> data-category=<%= seat.category %> data-price=<%= price %> id=<%= "#{row_id}#{seat.number}" %> class="btn btn-outline-success seat-rows <%= (booked_seats.include? seat.id) && 'sold' %>">
+                    <%= seat.number %>
+                </div>
+            <% end %>
+        <% end %>
+    </div>
+</div>

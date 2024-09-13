@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  show_time: "12:00PM"
+  movie: one
+  screen: one
+
+two:
+  show_time: "12:00PM"
+  movie: two
+  screen: two

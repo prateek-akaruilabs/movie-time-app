@@ -1,0 +1,96 @@
+<div class='card'>
+    <div class="card-body">
+        <h2 class="card-title"><%= @movie.name %></h2>
+        <h6 class="card-subtitle mb-2 text-body-secondary">
+            <span class="badge rounded-pill text-bg-success"><%= @movie.age_category %></span>
+            <% @movie.all_genres.each do |genre| %>
+                <span class="badge rounded-pill text-bg-secondary"><%= genre.upcase %></span>
+            <% end %>
+        </h6>        
+        <p class="card-text"><%= @movie.description %></p>
+        <p class="card-text"><small class="text-body-secondary">Released date <%= @movie.release_date %></small></p>
+    </div>
+    <div class="card-footer text-body-secondary">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination pagination-md justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <% @calendar_days.each do |date| %>
+                    <li class="datepicker page-item <%= date == @movie_date && 'active' %>">
+                        <a class="page-link" href=<%= movie_shows_path(@movie, date: date) %>>
+                            <%= date.strftime('%a, %b%e, %Y') %>
+                        </a>
+                    </li>
+                <% end %>
+                <li class="page-item">
+                    <a class="page-link" href=<%= movie_shows_path(@movie, next: true) %> aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<div class="card mb-3 cinema-container">
+    <div class="card-header">
+        <div class='row text-end'>
+            <span>
+                <span class='btn btn-sm btn-outline-success'>Available</span>
+                <span class='btn btn-sm btn-outline-warning'>Filling Fast</span>
+                <span class='btn btn-sm btn-outline-danger'>Almost Full</span>
+                <span class='btn btn-sm btn-outline-secondary'>Sold Out</span>
+            </span>
+        </div>
+    </div>
+    <div class="card-body">
+        <% @cinemas.each do |cinema| %>
+            <div class='card h-100 cinema-card'>
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <i class="bi bi-bookmark-heart-fill"></i>
+                                <%= cinema.name %> 
+                                <i class="bi bi-info-circle" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id=<%= cinema.id %>></i>
+                            </h5>
+                            <p class="card-text"><%= cinema.address %></p>
+                            <p class="card-text">
+                                <i class="bi bi-phone">&nbsp;M-Ticket</i>
+                                <i class="bi bi-cup-straw">&nbsp;Food & Beverage</i></p>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <% cinema.upcoming_shows_of_movie(@movie.id, @movie_date != Date.today).each do |show| %>
+                                <div 
+                                    data-bs-toggle="tooltip" data-bs-html="true" title="<%= show.screen.seat_with_price %>"
+                                    class="show-timings btn <%= show.is_available?(@movie_date) && 'btn-outline-success' %> <%= show.is_filling_fast?(@movie_date) && 'btn-outline-warning' %> <%= show.is_almost_full?(@movie_date) && 'btn-outline-danger' %> <%= show.is_sold_out?(@movie_date) && 'btn-outline-secondary' %>">
+                                    <a href=<%=cinema_screen_show_seats_path(cinema, show.screen, show, date: @movie_date) %> class='page-link'><%= show.show_time %></a>
+                                </div>
+                            <% end %>
+                            <p class="card-text"><small class="text-body-secondary">Cancellation Available</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% end %>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+        localStorage.setItem('movieDate', $('li.datepicker.active').text())
+        $('li.datepicker').click(function() {
+            var selectedDate = $(this).text() || new Date();
+            $(this).siblings().removeClass('active');
+            $(this).addClass('active');
+            localStorage.setItem('movieDate', selectedDate)
+        })
+    })
+</script>
